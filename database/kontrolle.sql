@@ -1,0 +1,14 @@
+
+USE bank;
+
+SHOW CREATE TABLE ACCOUNT;
+SHOW CREATE TABLE TRANSACTION_RECORD;
+
+SHOW INDEX FROM TRANSACTION_RECORD;
+
+SHOW GRANTS FOR 'bank_app'@'localhost';
+
+SELECT
+    (SELECT COUNT(*) FROM CUSTOMER)           AS anzahl_kunden,
+    (SELECT COUNT(*) FROM ACCOUNT)            AS anzahl_konten,
+    (SELECT COUNT(*) FROM TRANSACTION_RECORD) AS anzahl_buchungen;
