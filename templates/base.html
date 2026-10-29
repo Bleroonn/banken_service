@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>Banken-Service</title>
-  </head>
-  <body>
+</head>
+<body>
     <header>
-      <h1>Banken-Service</h1>
-      <nav>
-        <a href="/">Konto wählen</a>
-      </nav>
+        <h1>Banken-Service</h1>
+        <nav>
+            <a href="/">Konto wählen</a>
+            {% if account %}
+            <a href="/konto/{{ account.id }}">Übersicht</a>
+            <a href="/konto/{{ account.id }}/einzahlen">Einzahlen</a>
+            <a href="/konto/{{ account.id }}/abheben">Abheben</a>
+            <a href="/konto/{{ account.id }}/ueberweisen">Überweisen</a>
+            <span>Konto: {{ account.iban }}</span>
+            {% endif %}
+        </nav>
     </header>
     <main>
-      {% block content %}
-      {% endblock %}
+        {% block content %}{% endblock %}
     </main>
-  </body>
+</body>
 </html>

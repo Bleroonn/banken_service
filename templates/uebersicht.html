@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Kontoübersicht</h2>
+
+<table>
+    <tr><td>IBAN</td><td>{{ account.iban }}</td></tr>
+    <tr><td>Kontostand</td><td>CHF {{ account.balance }}</td></tr>
+    <tr><td>Überziehungslimit</td><td>CHF {{ account.overdraft }}</td></tr>
+    <tr><td>Verfügbarer Betrag</td><td>CHF {{ account.available_amount() }}</td></tr>
+</table>
+
+<p>
+    <a href="/konto/{{ account.id }}/einzahlen">Einzahlen</a>
+    <a href="/konto/{{ account.id }}/abheben">Abheben</a>
+    <a href="/konto/{{ account.id }}/ueberweisen">Überweisen</a>
+</p>
+
+<h3>Letzte Buchungen</h3>
+{% if transactions %}
+<table>
+    <tr>
+        <th>Datum</th>
+        <th>Text</th>
+        <th>Art</th>
+        <th>Betrag (CHF)</th>
+    </tr>
+    {% for t in transactions %}
+    <tr>
+        <td>{{ t.TRANSACTION_TIME.strftime("%d.%m.%Y %H:%M") }}</td>
+        <td>{{ t.TEXT }}</td>
+        <td>{% if t.TYPE == "C" %}Gutschrift{% else %}Belastung{% endif %}</td>
+        <td>{{ t.AMOUNT }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>Noch keine Buchungen vorhanden.</p>
+{% endif %}
+{% endblock %}
