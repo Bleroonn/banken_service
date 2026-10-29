@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Kunde und Konto auswählen</h2>
+
+<form method="get" action="/">
+    <label for="customer_id">Kunde</label>
+    <select name="customer_id" id="customer_id">
+        <option value="">Bitte wählen</option>
+        {% for customer in customers %}
+        <option value="{{ customer.id }}" {% if customer.id == customer_id %}selected{% endif %}>
+            {{ customer.first_name }} {{ customer.last_name }} ({{ customer.customer_number }})
+        </option>
+        {% endfor %}
+    </select>
+    <button type="submit">Konten anzeigen</button>
+</form>
+
+{% if customer_id %}
+    {% if accounts %}
+    <table>
+        <tr>
+            <th>IBAN</th>
+            <th>Kontostand (CHF)</th>
+            <th>Überziehungslimit (CHF)</th>
+            <th></th>
+        </tr>
+        {% for account in accounts %}
+        <tr>
+            <td>{{ account.iban }}</td>
+            <td>{{ account.balance }}</td>
+            <td>{{ account.overdraft }}</td>
+            <td><a href="/konto/{{ account.id }}">Auswählen</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Für diesen Kunden ist kein Konto vorhanden.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}
