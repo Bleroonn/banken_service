@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+<h2>Betrag abheben</h2>
+ 
+<p>
+    Konto: {{ account.iban }}<br>
+    Verfügbarer Betrag: CHF {{ account.available_amount() }}
+</p>
+ 
+{% if message %}
+<p class="ok">{{ message }}</p>
+{% endif %}
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+ 
+<form method="post">
+<label for="amount">Betrag (CHF)</label>
+<input type="text" name="amount" id="amount" value="{{ request.form.amount if error else '' }}">
+<button type="submit">Abheben</button>
+<a href="/konto/{{ account.id }}">Abbrechen</a>
+</form>
+{% endblock %}

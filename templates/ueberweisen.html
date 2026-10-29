@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Betrag überweisen</h2>
+
+<p>
+    Von Konto: {{ account.iban }}<br>
+    Verfügbarer Betrag: CHF {{ account.available_amount() }}
+</p>
+
+{% if message %}
+<p class="ok">{{ message }}</p>
+{% endif %}
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    <label for="iban">IBAN Fremdkonto</label>
+    <input type="text" name="iban" id="iban" value="{{ request.form.iban if error else '' }}">
+
+    <label for="amount">Betrag (CHF)</label>
+    <input type="text" name="amount" id="amount" value="{{ request.form.amount if error else '' }}">
+
+    <button type="submit">Überweisen</button>
+    <a href="/konto/{{ account.id }}">Abbrechen</a>
+</form>
+{% endblock %}
