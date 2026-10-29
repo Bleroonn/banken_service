@@ -1,4 +1,4 @@
-from exceptions import AccountNotFoundError, BankError, InsufficientFundsError
+from exceptions import AccountNotFoundError, BankError, InsufficientFundsError, ValidationError
 from models import Transaction
 
 
@@ -64,6 +64,41 @@ class BankService:
         except Exception:
             self.db.rollback()
             raise BankError("Die Abhebung konnte wegen eines technischen Problems nicht ausgeführt werden. Es wurde nichts gebucht.")
+
+    def transfer(self, account_id, iban_text, amount_text):
+        try:
+            amount = self.validator.validate_amount(amount_text)
+            iban = self.validator.validate_iban(iban_text)
+
+            source = self.load_account_for_booking(account_id)
+            if source.iban == iban:
+                raise ValidationError("Eine Überweisung auf das gleiche Konto ist nicht möglich.")
+
+            target = self.repository.find_account_by_iban(iban, lock=True)
+            if target is None:
+                raise AccountNotFoundError("Die IBAN existiert nicht. Bitte prüfen Sie die Eingabe. Es wurde nichts gebucht.")
+
+            if amount > source.available_amount():
+                raise InsufficientFundsError(
+                    f"Der Betrag übersteigt den verfügbaren Betrag von CHF {source.available_amount()}. Es wurde nichts gebucht."
+                )
+
+            source.balance -= amount
+            target.balance += amount
+            
+            self.repository.update_balance(source.id, source.balance)
+            self.repository.update_balance(target.id, target.balance)
+            self.repository.add_transaction(Transaction(source.id, "D", f"An {target.iban}", amount))
+            self.repository.add_transaction(Transaction(target.id, "C", f"Von {source.iban}", amount))
+
+            self.db.commit()
+            return source
+        except BankError:
+            self.db.rollback()
+            raise
+        except Exception:
+            self.db.rollback()
+            raise BankError("Die Überweisung konnte wegen eines technischen Problems nicht ausgeführt werden. Es wurde nichts gebucht.")
 
     def load_account_for_booking(self, account_id):
         account = self.repository.find_account_by_id(account_id, lock=True)
