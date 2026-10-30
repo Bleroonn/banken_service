@@ -16,6 +16,7 @@
 {% endif %}
  
 <form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 <label for="amount">Betrag (CHF)</label>
 <input type="text" name="amount" id="amount" value="{{ request.form.amount if error else '' }}">
 <button type="submit">Einzahlen</button>

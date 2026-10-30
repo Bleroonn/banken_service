@@ -16,6 +16,7 @@
 {% endif %}
 
 <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <label for="iban">IBAN Fremdkonto</label>
     <input type="text" name="iban" id="iban" value="{{ request.form.iban if error else '' }}">
 

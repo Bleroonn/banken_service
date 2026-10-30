@@ -1,0 +1,20 @@
+2026-10-29 21:15:24,867 INFO Einzahlung Konto 1, Betrag 200
+2026-10-29 21:15:33,346 WARNING Abhebung abgelehnt Konto 1: Der Betrag darf höchstens CHF 1'000'000 sein.
+2026-10-29 21:33:05,266 ERROR Technischer Fehler: 1045 (28000): Access denied for user 'bank_app'@'localhost' (using password: YES)
+2026-10-30 12:18:05,515 INFO Einzahlung Konto 1, Betrag 100
+2026-10-30 12:18:20,032 INFO Abhebung Konto 1, Betrag 200
+2026-10-30 12:18:35,359 WARNING Abhebung abgelehnt Konto 1: Der Betrag darf höchstens CHF 1'000'000 sein.
+2026-10-30 12:20:52,599 INFO Überweisung Konto 1, Betrag 200
+2026-10-30 12:45:13,586 INFO Einzahlung Konto 1, Betrag 250
+2026-10-30 12:46:04,583 WARNING Einzahlung abgelehnt Konto 1: Der Betrag muss grösser als 0 sein.
+2026-10-30 12:46:20,230 WARNING Einzahlung abgelehnt Konto 1: Bitte geben Sie einen gültigen Betrag ein.
+2026-10-30 12:46:30,366 WARNING Einzahlung abgelehnt Konto 1: Der Betrag darf höchstens zwei Nachkommastellen haben.
+2026-10-30 12:46:49,438 INFO Abhebung Konto 1, Betrag 500
+2026-10-30 12:47:30,034 WARNING Abhebung abgelehnt Konto 1: Der Betrag übersteigt den verfügbaren Betrag von CHF 1900.00. Es wurde nichts gebucht.
+2026-10-30 12:47:44,091 INFO Abhebung Konto 1, Betrag 1900
+2026-10-30 12:48:33,802 INFO Überweisung Konto 1, Betrag 100
+2026-10-30 12:51:20,370 WARNING Überweisung abgelehnt Konto 1: Bitte geben Sie eine gültige IBAN ein.
+2026-10-30 12:51:47,065 WARNING Überweisung abgelehnt Konto 2: Der Betrag übersteigt den verfügbaren Betrag von CHF 0.00. Es wurde nichts gebucht.
+2026-10-30 12:54:28,984 WARNING Überweisung abgelehnt Konto 1: Bitte geben Sie eine gültige IBAN ein.
+2026-10-30 12:54:53,023 WARNING Einzahlung abgelehnt Konto 1: Bitte geben Sie einen gültigen Betrag ein.
+2026-10-30 13:25:30,707 WARNING Überweisung abgelehnt Konto 1: Die IBAN existiert nicht. Bitte prüfen Sie die Eingabe. Es wurde nichts gebucht.
