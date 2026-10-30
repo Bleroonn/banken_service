@@ -14,6 +14,7 @@ csrf = CSRFProtect()
  
  
 def setup_logging():
+    # Logdateien werden im projekt gehalten
     os.makedirs("logs", exist_ok=True)
     handler = RotatingFileHandler("logs/app.log", maxBytes=1000000, backupCount=5, encoding="utf-8")
     handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
@@ -25,6 +26,7 @@ def setup_logging():
 def create_app():
     setup_logging()
     app = Flask(__name__)
+    # Die Secret Key muss gesetzt sein damit CSRF token und sessionn sicher funktionieren
     app.secret_key = os.getenv("SECRET_KEY")
     csrf.init_app(app)
     app.register_blueprint(bp)

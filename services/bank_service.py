@@ -36,6 +36,7 @@ class BankService:
 
     def deposit(self, account_id, amount_text):
         try:
+            # Betrag prüfen und konto für die buchung sperren
             amount = self.validator.validate_amount(amount_text)
             account = self.load_account_for_booking(account_id)
 
@@ -135,6 +136,7 @@ class BankService:
             )
 
     def load_account_for_booking(self, account_id):
+        # Bei buchungen das aktuellen konto mit lock laden
         account = self.repository.find_account_by_id(account_id, lock=True)
 
         if account is None:

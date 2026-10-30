@@ -23,6 +23,7 @@ class BankRepository:
     def find_account_by_id(self, account_id, lock=False):
         sql = "SELECT * FROM ACCOUNT WHERE ID = %s"
         if lock:
+            # beim booking muss das konto gelockt werden damit nicht doppelt transaaktionen passieren
             sql += " FOR UPDATE"
         cursor = self.db.cursor()
         cursor.execute(sql, (account_id,))
